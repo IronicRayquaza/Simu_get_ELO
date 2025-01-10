@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# Pokémon Elo Rating System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based web app to simulate Pokémon battles and update their Elo ratings based on the results. Players can choose between two randomly selected Pokémon, and the winner's Elo rating is updated accordingly. This app helps simulate how Pokémon would rank over time in a competitive system.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Elo Rating Calculation**: Uses the Elo rating system to adjust Pokémon ratings after each battle.
+- **Random Pokémon Selection**: Two Pokémon are selected randomly from a predefined list for each match.
+- **Match Simulation**: Players can click on a Pokémon to choose the winner, and the ratings are updated accordingly.
+- **Dynamic Interface**: The names and ratings of the Pokémon are displayed and updated after each match.
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **React**: Frontend framework for building the user interface.
+- **JavaScript (ES6)**: Core language for app logic.
+- **CSS**: For styling the user interface.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+git clone https://github.com/your-username/pokemon-elo-rating.git
+```
 
-### `npm run build`
+2. Navigate into the project directory:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+cd pokemon-elo-rating
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Install dependencies:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+```
 
-### `npm run eject`
+4. Start the development server:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The app will run on `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Usage
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. The app will display two randomly selected Pokémon.
+2. Click on one of the Pokémon to choose the winner.
+3. The Elo rating of the winner and loser will be updated based on the outcome.
+4. A new pair of Pokémon will be selected for the next match.
 
-## Learn More
+## How Elo Rating Works
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The Elo rating system is used to calculate the relative skill levels of two players. After each match:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The winner's rating is adjusted upward based on the difference in ratings between the two Pokémon.
+- The loser’s rating is adjusted downward accordingly.
+- The formula used is:
 
-### Code Splitting
+```javascript
+1 / (1 + Math.pow(10, (rating1 - rating2) / 100))
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- The `K` factor is set to 16 in this implementation.
 
-### Analyzing the Bundle Size
+## Future Improvements
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Add more Pokémon to the list.
+- Implement animations for the Pokémon.
+- Introduce a leaderboard or ranking system for the Pokémon.
+- Allow players to choose Pokémon manually instead of random selection.
+- Implement a multiplayer feature to let users battle against each other.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
