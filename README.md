@@ -20,7 +20,7 @@ A React-based web app to simulate Pokémon battles and update their Elo ratings 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Menma420/pokemon-elo-rating.git
+git clone https://github.com/Menma420/PokemonEloRating.git
 ```
 
 2. Navigate into the project directory:
