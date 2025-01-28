@@ -1,4 +1,4 @@
-
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
@@ -28,7 +28,7 @@ const App = () => {
 
   const simulateBattle = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/simulate", {
+      const response = await axios.post(API_BASE_URL, {
         team1: team1.filter(Boolean),
         team2: team2.filter(Boolean),
       });
@@ -41,7 +41,7 @@ const App = () => {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/rankings");
+      const response = await axios.get(API_BASE_URL);
       setLeaderboard(response.data);
     } catch (error) {
       console.error("Error fetching leaderboard:", error);
