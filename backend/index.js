@@ -1,5 +1,7 @@
 
 
+// require("dotenv").config();
+// const PORT = process.env.PORT || 5000;
 // const express = require("express");
 // const axios = require("axios");
 // const cors = require("cors");
@@ -30,7 +32,7 @@
 //     return { name, type, stats: baseStats };
 //   } catch (error) {
 //     console.error(`Error fetching data for ${name}:`, error);
-//     return null;
+//     return null;  // Return null if data fetching fails
 //   }
 // };
 
@@ -48,27 +50,34 @@
 //   const expectedLoser = calculateExpected(ratingLoser, ratingWinner);
 
 //   // Update ratings
-//   ratings[winner] = Math.round(
-//     ratingWinner + K_FACTOR * (1 - expectedWinner)
-//   );
+//   ratings[winner] = Math.round(ratingWinner + K_FACTOR * (1 - expectedWinner));
 //   ratings[loser] = Math.round(ratingLoser + K_FACTOR * (0 - expectedLoser));
 // };
 
 // // Battle simulation
 // const simulateBattle = async (team1, team2) => {
+//   if (team1.length === 0 || team2.length === 0) {
+//     return "Error: Both teams must have at least one Pokémon.";
+//   }
+
 //   const team1Data = await Promise.all(team1.map(fetchPokemonData));
 //   const team2Data = await Promise.all(team2.map(fetchPokemonData));
+
+//   // Filter out invalid Pokémon data (null values)
+//   const validTeam1 = team1Data.filter((data) => data !== null);
+//   const validTeam2 = team2Data.filter((data) => data !== null);
+
+//   if (validTeam1.length === 0 || validTeam2.length === 0) {
+//     return "Error: One or both teams have invalid Pokémon.";
+//   }
 
 //   let index1 = 0,
 //     index2 = 0;
 
-//   while (index1 < 6 && index2 < 6) {
-//     const active1 = team1Data[index1];
-//     const active2 = team2Data[index2];
-
-//     if (!active1 || !active2) {
-//       return "Error: Some Pokémon could not be found.";
-//     }
+//   // Simulate the battle with valid Pokémon
+//   while (index1 < validTeam1.length && index2 < validTeam2.length) {
+//     const active1 = validTeam1[index1];
+//     const active2 = validTeam2[index2];
 
 //     console.log(`Battle: ${active1.name} vs ${active2.name}`);
 
@@ -92,14 +101,24 @@
 //     }
 //   }
 
-//   if (index1 === 6 && index2 === 6) return "It's a draw!";
-//   return index1 === 6 ? "Team 2 wins!" : "Team 1 wins!";
+//   if (index1 === validTeam1.length && index2 === validTeam2.length) return "It's a draw!";
+//   return index1 === validTeam1.length ? "Team 2 wins!" : "Team 1 wins!";
 // };
 
 // // API endpoint
 // app.post("/simulate", async (req, res) => {
 //   const { team1, team2 } = req.body;
+
+//   // Check if both teams have at least one Pokémon
+//   if (team1.length === 0 || team2.length === 0) {
+//     return res.status(400).json({ error: "Both teams must have at least one Pokémon." });
+//   }
+
 //   const result = await simulateBattle(team1, team2);
+//   if (result.startsWith("Error")) {
+//     return res.status(400).json({ error: result });
+//   }
+
 //   res.json({ result, ratings });
 // });
 
@@ -113,10 +132,11 @@
 // });
 
 // // Start server
-// const PORT = 5000;
+// // const PORT = 5000;
 // app.listen(PORT, () => {
 //   console.log(`Server running on http://localhost:${PORT}`);
 // });
+
 
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
@@ -125,8 +145,16 @@ const axios = require("axios");
 const cors = require("cors");
 
 const app = express();
+
+// Allow requests from your frontend URL
+const corsOptions = {
+  origin: 'https://simu-get-elo.vercel.app', // Your frontend URL
+  methods: ['GET', 'POST'], // Adjust methods as needed
+  allowedHeaders: ['Content-Type'],
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions)); // Apply CORS configuration
 
 const POKE_API_URL = "https://pokeapi.co/api/v2/pokemon";
 
@@ -250,7 +278,6 @@ app.get("/rankings", (req, res) => {
 });
 
 // Start server
-// const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

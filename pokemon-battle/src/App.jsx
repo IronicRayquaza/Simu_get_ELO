@@ -198,7 +198,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_BASE_URL = "https://elobackend-rkqzpiycd-ironicrayquazas-projects.vercel.app";
+const API_BASE_URL = "https://elobackend-3k9bwaqtb-ironicrayquazas-projects.vercel.app";
 
 const App = () => {
   const [team1, setTeam1] = useState(Array(6).fill(""));
