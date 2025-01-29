@@ -1,4 +1,4 @@
-// const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 // import "./App.css";
@@ -28,7 +28,7 @@
 
 //   const simulateBattle = async () => {
 //     try {
-//       const response = await axios.post(API_BASE_URL, {
+//       const response = await axios.post("http://localhost:5000/simulate", {
 //         team1: team1.filter(Boolean),
 //         team2: team2.filter(Boolean),
 //       });
@@ -41,7 +41,7 @@
 
 //   const fetchLeaderboard = async () => {
 //     try {
-//       const response = await axios.get(API_BASE_URL);
+//       const response = await axios.get("http://localhost:5000/rankings");
 //       setLeaderboard(response.data);
 //     } catch (error) {
 //       console.error("Error fetching leaderboard:", error);
@@ -194,11 +194,11 @@
 // export default App;
 
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
+
+const API_BASE_URL = "https://elobackend-rkqzpiycd-ironicrayquazas-projects.vercel.app";
 
 const App = () => {
   const [team1, setTeam1] = useState(Array(6).fill(""));
@@ -256,7 +256,9 @@ const App = () => {
     }
 
     try {
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1000");
+      const response = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon?limit=1000`
+      );
       const allPokemon = response.data.results;
       const filteredPokemon = allPokemon.filter((pokemon) =>
         pokemon.name.toLowerCase().includes(query.toLowerCase())
@@ -308,7 +310,9 @@ const App = () => {
       <div className="teams">
         {["team1", "team2"].map((teamName, teamIndex) => (
           <div key={teamIndex} className="team">
-            <h2 className="team-title">{teamName === "team1" ? "Team 1" : "Team 2"}</h2>
+            <h2 className="team-title">
+              {teamName === "team1" ? "Team 1" : "Team 2"}
+            </h2>
             {(teamName === "team1" ? team1 : team2).map((pokemon, index) => (
               <div key={index} className="pokemon-input-container">
                 <input
@@ -322,15 +326,23 @@ const App = () => {
                   activeInput.index === index &&
                   teamSuggestions[teamName][index].length > 0 && (
                     <ul className="suggestions">
-                      {teamSuggestions[teamName][index].map((suggestion, idx) => (
-                        <li
-                          key={idx}
-                          className="suggestion-item"
-                          onClick={() => handleSuggestionSelect(suggestion.name, teamName, index)}
-                        >
-                          {suggestion.name}
-                        </li>
-                      ))}
+                      {teamSuggestions[teamName][index].map(
+                        (suggestion, idx) => (
+                          <li
+                            key={idx}
+                            className="suggestion-item"
+                            onClick={() =>
+                              handleSuggestionSelect(
+                                suggestion.name,
+                                teamName,
+                                index
+                              )
+                            }
+                          >
+                            {suggestion.name}
+                          </li>
+                        )
+                      )}
                     </ul>
                   )}
               </div>
